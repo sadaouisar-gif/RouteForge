@@ -1,5 +1,6 @@
 #include "Graph.h"
 #include <iostream>
+#include <stdexcept>
 
 Graph::Graph(int vertices) {
     this->vertices = vertices;
@@ -26,4 +27,15 @@ void Graph::print() const {
 
         std::cout << '\n';
     }
+}
+
+int Graph::getVertexCount() const {
+    return vertices;
+}
+const std::vector<std::pair<int, int>>& Graph::getNeighbors(int vertex) const {
+    if (vertex < 0 || vertex >= vertices) {
+        throw std::out_of_range("Invalid vertex");
+    }
+
+    return adjacencyList[vertex];
 }

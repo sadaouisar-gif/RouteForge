@@ -1,4 +1,5 @@
 #include "graph/Graph.h"
+#include <iostream>
 
 int main() {
     Graph graph(5);
@@ -10,6 +11,10 @@ int main() {
     graph.addEdge(3, 4, 3);
 
     graph.print();
+
+    std::cout << "Number of vertices: "
+          << graph.getVertexCount()
+          << '\n';
 
     return 0;
 }
