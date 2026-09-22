@@ -1,4 +1,5 @@
 #include "graph/Graph.h"
+#include "algorithms/BFS.h"
 #include <iostream>
 
 int main() {
@@ -13,8 +14,18 @@ int main() {
     graph.print();
 
     std::cout << "Number of vertices: "
-          << graph.getVertexCount()
-          << '\n';
+              << graph.getVertexCount()
+              << '\n';
+
+    std::vector<int> bfsResult = bfs(graph, 0);
+
+    std::cout << "BFS from vertex 0: ";
+
+    for (int vertex : bfsResult) {
+        std::cout << vertex << " ";
+    }
+
+    std::cout << '\n';
 
     return 0;
 }
