@@ -1,4 +1,5 @@
 #include "graph/Graph.h"
+#include "algorithms/DFS.h"
 #include "algorithms/BFS.h"
 #include <iostream>
 
@@ -23,6 +24,16 @@ int main() {
 
     for (int vertex : bfsResult) {
         std::cout << vertex << " ";
+    }
+
+    std::cout << '\n';
+
+    std::vector<int> dfsResult = dfs(graph, 0);
+
+    std::cout << "DFS from vertex 0: ";
+
+    for (int vertex : dfsResult) {
+         std::cout << vertex << " ";
     }
 
     std::cout << '\n';
