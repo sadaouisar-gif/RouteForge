@@ -1,4 +1,5 @@
 #include "Graph.h"
+
 #include <iostream>
 #include <stdexcept>
 
@@ -8,6 +9,7 @@ Graph::Graph(int vertices) {
 }
 
 void Graph::addEdge(int source, int destination, int weight) {
+
     if (source < 0 || source >= vertices ||
         destination < 0 || destination >= vertices) {
         return;
@@ -18,11 +20,17 @@ void Graph::addEdge(int source, int destination, int weight) {
 }
 
 void Graph::print() const {
+
     for (int vertex = 0; vertex < vertices; vertex++) {
+
         std::cout << vertex << " -> ";
 
         for (const auto& edge : adjacencyList[vertex]) {
-            std::cout << "(" << edge.first << ", " << edge.second << ") ";
+            std::cout << "("
+                      << edge.first
+                      << ", "
+                      << edge.second
+                      << ") ";
         }
 
         std::cout << '\n';
@@ -32,7 +40,10 @@ void Graph::print() const {
 int Graph::getVertexCount() const {
     return vertices;
 }
-const std::vector<std::pair<int, int>>& Graph::getNeighbors(int vertex) const {
+
+const std::vector<std::pair<int, int>>&
+Graph::getNeighbors(int vertex) const {
+
     if (vertex < 0 || vertex >= vertices) {
         throw std::out_of_range("Invalid vertex");
     }
