@@ -6,6 +6,7 @@
 #include "algorithms/DFS.h"
 #include "algorithms/Dijkstra.h"
 #include "algorithms/AStar.h"
+#include "algorithms/BellmanFord.h"
 
 int main() {
 
@@ -64,7 +65,8 @@ int main() {
     // Dijkstra
     // --------------------
 
-    DijkstraResult dijkstraResult = dijkstra(graph, 0);
+    DijkstraResult dijkstraResult =
+        dijkstra(graph, 0);
 
     std::cout << "\nDijkstra from vertex 0:\n";
 
@@ -120,6 +122,120 @@ int main() {
     }
 
     std::cout << '\n';
+
+    // --------------------
+    // Bellman-Ford
+    // --------------------
+
+    BellmanFordResult bellmanResult =
+        bellmanFord(graph, 0);
+
+    std::cout << "\nBellman-Ford from vertex 0:\n";
+
+    if (bellmanResult.hasNegativeCycle) {
+
+        std::cout << "Negative cycle detected!\n";
+
+    } else {
+
+        for (int vertex = 0;
+             vertex < graph.getVertexCount();
+             vertex++) {
+
+            std::cout << "Distance to "
+                      << vertex
+                      << ": "
+                      << bellmanResult.distances[vertex]
+                      << '\n';
+        }
+
+        std::vector<int> bellmanPath =
+            reconstructBellmanFordPath(
+                bellmanResult,
+                0,
+                destination
+            );
+
+        std::cout << "Shortest path from 0 to "
+                  << destination
+                  << ": ";
+
+        for (int vertex : bellmanPath) {
+            std::cout << vertex << " ";
+        }
+
+        std::cout << '\n';
+    }
+
+    // --------------------
+// Bellman-Ford with negative weight
+// --------------------
+
+std::cout << "\n--- Bellman-Ford negative weight test ---\n";
+
+Graph negativeGraph(4, true);
+
+negativeGraph.addEdge(0, 1, 4);
+negativeGraph.addEdge(0, 2, 5);
+negativeGraph.addEdge(1, 2, -2);
+negativeGraph.addEdge(2, 3, 3);
+
+BellmanFordResult negativeResult =
+    bellmanFord(negativeGraph, 0);
+
+if (negativeResult.hasNegativeCycle) {
+
+    std::cout << "Negative cycle detected!\n";
+
+} else {
+
+    for (int vertex = 0;
+         vertex < negativeGraph.getVertexCount();
+         vertex++) {
+
+        std::cout << "Distance to "
+                  << vertex
+                  << ": "
+                  << negativeResult.distances[vertex]
+                  << '\n';
+    }
+
+    std::vector<int> negativePath =
+        reconstructBellmanFordPath(
+            negativeResult,
+            0,
+            3
+        );
+
+    std::cout << "Shortest path from 0 to 3: ";
+
+    for (int vertex : negativePath) {
+        std::cout << vertex << " ";
+    }
+
+   std::cout << '\n';
+}
+
+// --------------------
+// Negative cycle test
+// --------------------
+
+std::cout << "\n--- Negative cycle test ---\n";
+
+Graph cycleGraph(3, true);
+
+cycleGraph.addEdge(0, 1, 1);
+cycleGraph.addEdge(1, 2, -2);
+cycleGraph.addEdge(2, 1, -2);
+
+BellmanFordResult cycleResult =
+    bellmanFord(cycleGraph, 0);
+
+if (cycleResult.hasNegativeCycle) {
+    std::cout << "Negative cycle detected!\n";
+} else {
+    std::cout << "No negative cycle detected.\n";
+}
 
     return 0;
 }

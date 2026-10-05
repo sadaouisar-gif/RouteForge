@@ -13,18 +13,22 @@ class Graph {
 private:
     int vertices;
 
+    bool directed;
+
     std::vector<std::vector<std::pair<int, int>>> adjacencyList;
 
     std::vector<Position> positions;
 
 public:
-    Graph(int vertices);
+    Graph(int vertices, bool directed = false);
 
     void addEdge(int source, int destination, int weight);
 
     void print() const;
 
     int getVertexCount() const;
+
+    bool isDirected() const;
 
     const std::vector<std::pair<int, int>>&
     getNeighbors(int vertex) const;
