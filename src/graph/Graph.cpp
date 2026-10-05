@@ -6,6 +6,7 @@
 Graph::Graph(int vertices) {
     this->vertices = vertices;
     adjacencyList.resize(vertices);
+    positions.resize(vertices);
 }
 
 void Graph::addEdge(int source, int destination, int weight) {
@@ -49,4 +50,22 @@ Graph::getNeighbors(int vertex) const {
     }
 
     return adjacencyList[vertex];
+}
+
+void Graph::setPosition(int vertex, double x, double y) {
+
+    if (vertex < 0 || vertex >= vertices) {
+        throw std::out_of_range("Invalid vertex");
+    }
+
+    positions[vertex] = {x, y};
+}
+
+Position Graph::getPosition(int vertex) const {
+
+    if (vertex < 0 || vertex >= vertices) {
+        throw std::out_of_range("Invalid vertex");
+    }
+
+    return positions[vertex];
 }
