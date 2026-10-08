@@ -7,6 +7,8 @@
 #include "algorithms/Dijkstra.h"
 #include "algorithms/AStar.h"
 #include "algorithms/BellmanFord.h"
+#include "algorithms/Prim.h"
+#include "algorithms/Kruskal.h"
 
 int main() {
 
@@ -235,6 +237,94 @@ if (cycleResult.hasNegativeCycle) {
     std::cout << "Negative cycle detected!\n";
 } else {
     std::cout << "No negative cycle detected.\n";
+}
+
+
+// --------------------
+// Prim
+// --------------------
+
+std::cout << "\n--- Prim MST test ---\n";
+
+PrimResult primResult = prim(graph, 0);
+
+if (!primResult.connected) {
+
+    std::cout << "The graph is not connected.\n";
+
+} else {
+
+    std::cout << "MST edges:\n";
+
+    for (const MSTEdge& edge : primResult.edges) {
+
+        std::cout << edge.source
+                  << " -> "
+                  << edge.destination
+                  << " | weight: "
+                  << edge.weight
+                  << '\n';
+    }
+
+    std::cout << "Total MST weight: "
+              << primResult.totalWeight
+              << '\n';
+}
+
+// --------------------
+// Kruskal
+// --------------------
+
+std::cout << "\n--- Kruskal MST test ---\n";
+
+KruskalResult kruskalResult = kruskal(graph);
+
+if (!kruskalResult.connected) {
+
+    std::cout << "The graph is not connected.\n";
+
+} else {
+
+    std::cout << "MST edges:\n";
+
+    for (const MSTEdge& edge : kruskalResult.edges) {
+
+        std::cout << edge.source
+                  << " -> "
+                  << edge.destination
+                  << " | weight: "
+                  << edge.weight
+                  << '\n';
+    }
+
+    std::cout << "Total MST weight: "
+              << kruskalResult.totalWeight
+              << '\n';
+}
+
+// --------------------
+// Compare Prim and Kruskal
+// --------------------
+
+std::cout << "\n--- MST Comparison ---\n";
+
+std::cout << "Prim total weight: "
+          << primResult.totalWeight
+          << '\n';
+
+std::cout << "Kruskal total weight: "
+          << kruskalResult.totalWeight
+          << '\n';
+
+if (primResult.connected &&
+    kruskalResult.connected &&
+    primResult.totalWeight == kruskalResult.totalWeight) {
+
+    std::cout << "Both algorithms agree!\n";
+
+} else {
+
+    std::cout << "MST comparison requires verification.\n";
 }
 
     return 0;
